@@ -33,3 +33,21 @@
   margin: 40px auto;
   padding: 20px;
 }
+
+/* entry previews / list */
+.entry-preview {
+  padding: 5px 24px;
+  margin: 20px 0;
+  border-bottom: 1px solid #fafafa;
+}
+.entry-preview:hover {
+  box-shadow: 1px 3px 5px rgba(0,0,0,0.4);
+}
+.entry-preview p {
+  font-size: 14px;
+}
+.entry-preview h3 {
+  font-size: 18px;
+  color: #f1356d;
+  margin-bottom: 3px;
+}
