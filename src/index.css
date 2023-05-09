@@ -30,14 +30,22 @@
 }
 .content {
   max-width: 600px;
-  margin: 40px auto;
+  margin: 10px auto;
   padding: 20px;
+}
+
+.content h2 {
+    font-size: 18px;
+}
+
+p a:hover {
+  color: #f1356d;
 }
 
 /* entry previews / list */
 .entry-preview {
   padding: 5px 24px;
-  margin: 20px 0;
+  margin: 10px 0;
   border-bottom: 1px solid #fafafa;
 }
 .entry-preview:hover {
@@ -48,6 +56,11 @@
 }
 .entry-preview h3 {
   font-size: 18px;
-  color: #f1356d;
+  color: rgb(236, 204, 23);
   margin-bottom: 3px;
+}
+
+.entry-list h2 {
+  padding: 5px 10px;
+  font-size: 16px;
 }
