@@ -1,4 +1,4 @@
-import {useState } from 'react';
+import { useState, useEffect } from 'react';
 import EntryList from './EntryList';
 
 const Home = () => {
@@ -22,6 +22,14 @@ const Home = () => {
         const newEntries = entries.filter(entry => entry.id !== id);
         setEntries(newEntries);
     }
+
+    // an empty dependency array passed in as a second argument will mean useEffect only fires
+    // once on initial render, not after every state change.
+    // If a dependency is added e.g. 'entries' or 'dream', then React will watch for any changes
+    // to these dependencies and fire on changes.
+    useEffect(() => {
+        console.log('useEffect ran')
+    }, []);
 
     return (
         <div className="home">
