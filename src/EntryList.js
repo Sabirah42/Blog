@@ -13,7 +13,6 @@ const EntryList = (props) => {
             <div className="entry-preview" key={ entry.id }>
                 <h3>{ entry.title }</h3>
                 <p>Written by { entry.author }</p>
-                <p>{ entry.body }</p>
                 <button onClick={()=> handleDelete(entry.id)}>delete entry</button>
             </div>
         ))}

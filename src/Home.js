@@ -12,24 +12,33 @@ const Home = () => {
         setDream('Turn on the heating without worrying.');
     }
 
-    const [entries, setEntries] = useState([
-        { title: 'My new website', body: 'lorem ipsum...', author: 'Sabirah', id: 1 },
-        { title: 'Welcome party!', body: 'lorem ipsum...', author: 'Sabirah', id: 2 },
-        { title: 'Web dev top tips', body: 'lorem ipsum...', author: 'Sabirah', id: 3 }
-    ])
+    const [entries, setEntries] = useState(null)
 
     const handleDelete = (id) => {
         const newEntries = entries.filter(entry => entry.id !== id);
         setEntries(newEntries);
     }
 
+    
+    useEffect(() => {
+    // FETCHing data from an end-point. This is a GET request to that URL, which returns a promise
+        fetch('http://localhost:8000/entries')
+    // Once the data is returned i.e. the RESponse, THEN you extract the data by returning res.json
+        .then(res => {
+            return res.json();
+        })
+    // THEN you can fire off another function that uses the returned DATA and change the state
+    // from null
+        .then((data) => {
+            console.log(data)
+            setEntries(data)
+        });
+    }, []);
+
     // an empty dependency array passed in as a second argument will mean useEffect only fires
     // once on initial render, not after every state change.
     // If a dependency is added e.g. 'entries' or 'dream', then React will watch for any changes
-    // to these dependencies and fire on changes.
-    useEffect(() => {
-        console.log('useEffect ran')
-    }, []);
+    // to these dependencies and fire on changes.    
 
     return (
         <div className="home">
@@ -40,9 +49,13 @@ const Home = () => {
             <button onClick={handleClick}>Click me</button> to change my dreams.<br />
             
             {/* Need to set to a 'variable' to use entries above as a prop. This is a 'property name' */}
+            {/* Need to check 'entries' first evaluates to true, as these need to be fetched from the
+                database before they are rendered, which can take a moment. Without this, there will
+                be an error message, as you cannot render a null value, which is what 'entries' is 
+                initially set to. */}
             <div>
                 <br />
-                <EntryList entries={entries} title="All blog entries:" handleDelete={handleDelete}/>
+                {entries && <EntryList entries={entries} title="All blog entries:" handleDelete={handleDelete}/>}
             </div>
         </div>
 
