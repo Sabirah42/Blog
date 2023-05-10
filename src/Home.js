@@ -18,6 +18,11 @@ const Home = () => {
         { title: 'Web dev top tips', body: 'lorem ipsum...', author: 'Sabirah', id: 3 }
     ])
 
+    const handleDelete = (id) => {
+        const newEntries = entries.filter(entry => entry.id !== id);
+        setEntries(newEntries);
+    }
+
     return (
         <div className="home">
             <h2>{ title }</h2><br />
@@ -29,7 +34,7 @@ const Home = () => {
             {/* Need to set to a 'variable' to use entries above as a prop. This is a 'property name' */}
             <div>
                 <br />
-                <EntryList entries={entries} title="All blog entries:"/>
+                <EntryList entries={entries} title="All blog entries:" handleDelete={handleDelete}/>
             </div>
         </div>
 
