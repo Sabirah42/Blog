@@ -19,6 +19,7 @@ const Home = () => {
         setEntries(newEntries);
     }
 
+    const [isPending, setIsPending] = useState(true);
     
     useEffect(() => {
     // FETCHing data from an end-point. This is a GET request to that URL, which returns a promise
@@ -30,8 +31,9 @@ const Home = () => {
     // THEN you can fire off another function that uses the returned DATA and change the state
     // from null
         .then((data) => {
-            console.log(data)
-            setEntries(data)
+            console.log(data);
+            setEntries(data);
+            setIsPending(false);
         });
     }, []);
 
@@ -55,7 +57,8 @@ const Home = () => {
                 initially set to. */}
             <div>
                 <br />
-                {entries && <EntryList entries={entries} title="All blog entries:" handleDelete={handleDelete}/>}
+                { isPending && <div>Loading...</div> }
+                { entries && <EntryList entries={entries} title="All blog entries:" handleDelete={handleDelete}/> }
             </div>
         </div>
 
