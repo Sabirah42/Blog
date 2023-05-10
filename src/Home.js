@@ -1,54 +1,18 @@
 import { useState, useEffect } from 'react';
 import EntryList from './EntryList';
+import useFetch from './useFetch';
 
 const Home = () => {
-
     const title = "Welcome to Sabirah's React blog!";
-    const github = "https://github.com/Sabirah42"
+    const github = "https://github.com/Sabirah42";
 
     const [dream, setDream] = useState('Have fur babies.');
-    const [entries, setEntries] = useState(null);
-    const [isPending, setIsPending] = useState(true);
-    const [error, setError] = useState(null);
-
+    const { data: entries, isPending, error } = useFetch('http://localhost:8000/entries')
+    
     const handleClick = () => {
         setDream('Turn on the heating without worrying.');
     }
     
-    const handleDelete = (id) => {
-        const newEntries = entries.filter(entry => entry.id !== id);
-        setEntries(newEntries);
-    }
-
-    
-    useEffect(() => {
-    // FETCHing data from an end-point. This is a GET request to that URL, which returns a promise
-        fetch('http://localhost:8000/entries')
-    // Once the data is returned i.e. the RESponse, THEN you extract the data by returning res.json
-        .then(res => {
-            if(!res.ok) {
-                throw Error('Could not fetch blog data.');
-            }
-            return res.json();
-        })
-    // THEN you can fire off another function that uses the returned DATA and change the state
-    // from null
-        .then((data) => {
-            console.log(data);
-            setEntries(data);
-            setIsPending(false);
-            setError(null);
-        })
-        .catch(err => {
-            setIsPending(false)
-            setError(err.message);
-        })
-    }, []);
-
-    // an empty dependency array passed in as a second argument will mean useEffect only fires
-    // once on initial render, not after every state change.
-    // If a dependency is added e.g. 'entries' or 'dream', then React will watch for any changes
-    // to these dependencies and fire on changes.    
 
     return (
         <div className="home">
@@ -67,7 +31,7 @@ const Home = () => {
                 <br />
                 { error && <div>{ error }</div> }
                 { isPending && <div>Loading...</div> }
-                { entries && <EntryList entries={entries} title="All blog entries:" handleDelete={handleDelete}/> }
+                { entries && <EntryList entries={entries} title="All blog entries:" /> }
             </div>
         </div>
 
