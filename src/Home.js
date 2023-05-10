@@ -6,26 +6,29 @@ const Home = () => {
     const title = "Welcome to Sabirah's React blog!";
     const github = "https://github.com/Sabirah42"
 
-    const [dream, setDream] = useState('Have fur babies.')
+    const [dream, setDream] = useState('Have fur babies.');
+    const [entries, setEntries] = useState(null);
+    const [isPending, setIsPending] = useState(true);
+    const [error, setError] = useState(null);
 
     const handleClick = () => {
         setDream('Turn on the heating without worrying.');
     }
-
-    const [entries, setEntries] = useState(null)
-
+    
     const handleDelete = (id) => {
         const newEntries = entries.filter(entry => entry.id !== id);
         setEntries(newEntries);
     }
 
-    const [isPending, setIsPending] = useState(true);
     
     useEffect(() => {
     // FETCHing data from an end-point. This is a GET request to that URL, which returns a promise
         fetch('http://localhost:8000/entries')
     // Once the data is returned i.e. the RESponse, THEN you extract the data by returning res.json
         .then(res => {
+            if(!res.ok) {
+                throw Error('Could not fetch blog data.');
+            }
             return res.json();
         })
     // THEN you can fire off another function that uses the returned DATA and change the state
@@ -34,7 +37,12 @@ const Home = () => {
             console.log(data);
             setEntries(data);
             setIsPending(false);
-        });
+            setError(null);
+        })
+        .catch(err => {
+            setIsPending(false)
+            setError(err.message);
+        })
     }, []);
 
     // an empty dependency array passed in as a second argument will mean useEffect only fires
@@ -57,6 +65,7 @@ const Home = () => {
                 initially set to. */}
             <div>
                 <br />
+                { error && <div>{ error }</div> }
                 { isPending && <div>Loading...</div> }
                 { entries && <EntryList entries={entries} title="All blog entries:" handleDelete={handleDelete}/> }
             </div>
