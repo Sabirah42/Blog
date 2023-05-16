@@ -4,12 +4,16 @@ const Create = () => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [author, setAuthor] = useState('Sabirah');
+    const [isPending, setIsPending] = useState(false);
+    
 
     const handleSubmit = (e) => {
         // Stops page from refreshing on form submission, as this will lose the typed data
         e.preventDefault();
         // id properly is not needed for the entry object, as the JSON server will add this
         const entry = { title, body, author };
+
+        setIsPending(true)
 
         fetch('http://localhost:8000/entries', {
             // second argument defines the type of request we're sending,
@@ -20,6 +24,7 @@ const Create = () => {
             body: JSON.stringify(entry)
         }).then(() => {
             console.log('New entry added');
+            setIsPending(false);
         })
     }
 
@@ -48,7 +53,9 @@ const Create = () => {
                     <option value="Sabirah">Sabirah</option>
                     <option value="Not Sabirah">Not Sabirah?</option>
                 </select>
-                <button>Add entry</button>
+                { !isPending && <button>Add entry</button> }
+                { isPending && <button disabled>Adding entry...</button> }
+
             </form>
         </div>
     );
