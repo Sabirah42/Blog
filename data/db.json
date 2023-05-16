@@ -29,6 +29,12 @@
       "body": "Only when it's loading, mind.",
       "author": "Sabirah",
       "id": 5
+    },
+    {
+      "title": "Using history",
+      "body": "More complex than history.go(num)",
+      "author": "Not Sabirah",
+      "id": 6
     }
   ]
 }
