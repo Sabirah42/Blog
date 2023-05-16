@@ -3,6 +3,7 @@ import Home from './Home';
 import Create from './Create';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import EntryDetails from './EntryDetails';
+import NotFound from './NotFound';
 
 
 
@@ -28,6 +29,12 @@ function App() {
 
             <Route path="/entries/:id"> 
               <EntryDetails />
+            </Route>
+
+            {/* an asterisk will catch all non-defined routes. Must go at the bottom of all other
+                routes, or they will all redirect to the error page */}
+            <Route path="*"> 
+              <NotFound />
             </Route>
           </Switch>
         </div>
