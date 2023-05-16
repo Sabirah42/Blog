@@ -79,6 +79,15 @@ p a:hover {
   margin: 20px 0;
 }
 
+.entry-details button {
+  background: rgb(236, 204, 23);
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 /* create new blog form */
 .create {
   max-width: 400px;
